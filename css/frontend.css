@@ -1,0 +1,171 @@
+/* --- Select Dropdown --- */
+.icey_select_wrapper {
+	position: relative;
+	margin-top: 1.5rem;
+	width: 100%;
+}
+.icey_language_select {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 100%;
+	padding: 1rem 3rem 1rem 1.5rem;
+	font-size: 1rem;
+	font-family: inherit;
+	color: #182112;
+	background-color: #FAFAFA;
+	border: 2px solid #2D471C;
+	border-radius: 0.25rem;
+	cursor: pointer;
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.icey_language_select:focus {
+	outline: none;
+	border-color: #8A1538;
+}
+.icey_select_wrapper::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	right: 1.5rem;
+	transform: translateY(-50%);
+	width: 0;
+	height: 0;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid #2D471C;
+	pointer-events: none;
+}
+
+/* --- Modal Layout --- */
+.icey_language_modal_backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(28, 30, 33, 0.8);
+	z-index: 99998;
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
+}
+.icey_language_modal {
+	position: fixed;
+	top: 60%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: calc(100% - 4rem);
+	max-width: 550px;
+	background-color: #fbf8f7;
+	z-index: 99999;
+	border-radius: 0.5rem;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+	opacity: 0;
+	transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease-in-out;
+	pointer-events: none;
+	font-family: sans-serif;
+}
+.icey_language_modal.icey_modal_visible,
+.icey_language_modal_backdrop.icey_modal_visible {
+	opacity: 1;
+	pointer-events: all;
+}
+.icey_language_modal.icey_modal_visible {
+	top: 50%;
+}
+.icey_language_modal_inner {
+	padding: 2.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+.icey_modal_title {
+	font-size: 1.6rem;
+	color: #2D471C;
+	margin: 0 0 0.5em 0;
+	font-weight: bold;
+}
+.icey_modal_content p {
+	font-size: 1rem;
+	color: #182112;
+	line-height: 1.6;
+	margin: 0 0 1rem 0;
+}
+.icey_modal_content p:last-child {
+	margin: 0;
+}
+
+/* --- Buttons --- */
+.icey_modal_buttons {
+	display: flex;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+.icey_btn {
+	flex: 1;
+	justify-content: center;
+	text-align: center;
+	font-size: 0.9rem;
+	padding: 1em 2em;
+	border-radius: 0.25rem;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+	text-transform: uppercase;
+	transition: all 0.3s ease;
+}
+.icey_btn_primary {
+	background-color: #8A1538;
+	color: #FAFAFA;
+}
+.icey_btn_primary:hover {
+	background-color: #2D471C;
+}
+.icey_btn_secondary {
+	background-color: transparent;
+	color: #2D471C;
+	border: 1.5px solid #2D471C;
+}
+.icey_btn_secondary:hover {
+	background-color: #2D471C;
+	color: #FAFAFA;
+}
+
+/* --- Hide Google Translate Native UI --- */
+body {
+	top: 0 !important;
+}
+.goog-te-banner-frame.skiptranslate,
+body > .skiptranslate > iframe.skiptranslate {
+	display: none !important;
+	visibility: hidden !important;
+	opacity: 0 !important;
+	width: 0 !important;
+	height: 0 !important;
+}
+#goog-gt-tt {
+	display: none !important;
+	visibility: hidden !important;
+	opacity: 0 !important;
+	position: absolute !important;
+	z-index: -1 !important;
+}
+.goog-tooltip,
+.goog-tooltip-pos {
+	display: none !important;
+	visibility: hidden !important;
+	opacity: 0 !important;
+}
+
+/* --- Mobile tweaks --- */
+@media only screen and (max-width: 768px) {
+	.icey_language_modal_inner {
+		padding: 1.5rem;
+	}
+	.icey_modal_buttons {
+		flex-wrap: wrap;
+	}
+	.icey_btn {
+		width: 100%;
+		flex: none;
+	}
+}
