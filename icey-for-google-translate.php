@@ -1,7 +1,6 @@
 <?php
 /**
  * Plugin Name: Icey for Google Translate
- * Plugin URI: https://icey.se
  * Description: Simply the easiest and best Google Translate plugin for WordPress out there.
  * Version: 1.0.0
  * Author: Icedor Johansson
