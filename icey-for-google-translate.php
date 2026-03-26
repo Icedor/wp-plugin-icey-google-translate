@@ -8,14 +8,14 @@
  * Author URI: https://icey.se
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: icey-google-translate
+ * Text Domain: icey-for-google-translate
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 add_action( 'plugins_loaded', 'icey_gt_load_textdomain' );
 function icey_gt_load_textdomain() {
-    load_plugin_textdomain( 'icey-google-translate', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    load_plugin_textdomain( 'icey-for-google-translate', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
 function icey_gt_get_available_languages() {
@@ -40,7 +40,7 @@ function icey_gt_register_settings() {
 
 add_action( 'admin_menu', 'icey_gt_add_admin_menu' );
 function icey_gt_add_admin_menu() {
-    $page = add_options_page( 'Icey Google Translate', 'Google Translate', 'manage_options', 'icey-google-translate', 'icey_gt_settings_page' );
+    $page = add_options_page( 'Icey Google Translate', 'Google Translate', 'manage_options', 'icey-for-google-translate', 'icey_gt_settings_page' );
     add_action( "admin_print_scripts-{$page}", 'icey_gt_admin_scripts' );
 }
 
@@ -54,29 +54,29 @@ function icey_gt_settings_page() {
     $active_langs = array_filter( explode( ',', $active_langs_str ) );
     ?>
     <div class="wrap">
-        <h1><?php esc_html_e( 'Icey Google Translate Settings', 'icey-google-translate' ); ?></h1>
+        <h1><?php esc_html_e( 'Icey Google Translate Settings', 'icey-for-google-translate' ); ?></h1>
         <form method="post" action="options.php">
             <?php settings_fields( 'icey_gt_settings_group' ); ?>
             
             <table class="form-table">
                 <tr>
-                    <th scope="row"><?php esc_html_e( 'Modal Heading', 'icey-google-translate' ); ?></th>
+                    <th scope="row"><?php esc_html_e( 'Modal Heading', 'icey-for-google-translate' ); ?></th>
                     <td><input type="text" name="icey_gt_heading" value="<?php echo esc_attr( get_option('icey_gt_heading') ); ?>" class="regular-text" /></td>
                 </tr>
                 <tr>
-                    <th scope="row"><?php esc_html_e( 'Explanation Text', 'icey-google-translate' ); ?></th>
+                    <th scope="row"><?php esc_html_e( 'Explanation Text', 'icey-for-google-translate' ); ?></th>
                     <td><textarea name="icey_gt_explanation" rows="4" class="large-text"><?php echo esc_textarea( get_option('icey_gt_explanation') ); ?></textarea></td>
                 </tr>
                 <tr>
-                    <th scope="row"><?php esc_html_e( 'Button: Cancel', 'icey-google-translate' ); ?></th>
+                    <th scope="row"><?php esc_html_e( 'Button: Cancel', 'icey-for-google-translate' ); ?></th>
                     <td><input type="text" name="icey_gt_btn_cancel" value="<?php echo esc_attr( get_option('icey_gt_btn_cancel') ); ?>" class="regular-text" /></td>
                 </tr>
                 <tr>
-                    <th scope="row"><?php esc_html_e( 'Button: Translate', 'icey-google-translate' ); ?></th>
+                    <th scope="row"><?php esc_html_e( 'Button: Translate', 'icey-for-google-translate' ); ?></th>
                     <td><input type="text" name="icey_gt_btn_translate" value="<?php echo esc_attr( get_option('icey_gt_btn_translate') ); ?>" class="regular-text" /></td>
                 </tr>
                 <tr>
-                    <th scope="row"><?php esc_html_e( 'Site Default Language', 'icey-google-translate' ); ?></th>
+                    <th scope="row"><?php esc_html_e( 'Site Default Language', 'icey-for-google-translate' ); ?></th>
                     <td>
                         <select name="icey_gt_default_lang">
                             <?php foreach ( $all_langs as $code => $name ) : ?>
@@ -87,18 +87,18 @@ function icey_gt_settings_page() {
                 </tr>
                 <tr>
                     <th scope="row">
-                        <?php esc_html_e( 'Dropdown Languages', 'icey-google-translate' ); ?><br>
-                        <small><?php esc_html_e( 'Drag and drop to sort.', 'icey-google-translate' ); ?></small>
+                        <?php esc_html_e( 'Dropdown Languages', 'icey-for-google-translate' ); ?><br>
+                        <small><?php esc_html_e( 'Drag and drop to sort.', 'icey-for-google-translate' ); ?></small>
                     </th>
                     <td>
                         <div style="margin-bottom: 10px;">
                             <select id="icey_gt_add_lang_select">
-                                <option value=""><?php esc_html_e( '-- Select language to add --', 'icey-google-translate' ); ?></option>
+                                <option value=""><?php esc_html_e( '-- Select language to add --', 'icey-for-google-translate' ); ?></option>
                                 <?php foreach ( $all_langs as $code => $name ) : ?>
                                     <option value="<?php echo esc_attr($code); ?>" data-name="<?php echo esc_attr($name); ?>"><?php echo esc_html($name); ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <button type="button" class="button" id="icey_gt_add_lang_btn"><?php esc_html_e( 'Add', 'icey-google-translate' ); ?></button>
+                            <button type="button" class="button" id="icey_gt_add_lang_btn"><?php esc_html_e( 'Add', 'icey-for-google-translate' ); ?></button>
                         </div>
 
                         <ul id="icey_gt_pills_container" style="display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none;">
@@ -116,10 +116,10 @@ function icey_gt_settings_page() {
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><?php esc_html_e( 'Custom CSS', 'icey-google-translate' ); ?></th>
+                    <th scope="row"><?php esc_html_e( 'Custom CSS', 'icey-for-google-translate' ); ?></th>
                     <td>
                         <textarea name="icey_gt_custom_css" rows="6" class="large-text" style="font-family: monospace;"><?php echo esc_textarea( get_option('icey_gt_custom_css') ); ?></textarea>
-                        <p class="description"><?php esc_html_e( 'Add custom CSS to override default styling.', 'icey-google-translate' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Add custom CSS to override default styling.', 'icey-for-google-translate' ); ?></p>
                     </td>
                 </tr>
             </table>
@@ -149,7 +149,7 @@ function icey_gt_settings_page() {
 
             if (!code) return;
             if ($('#icey_gt_pills_container li[data-code="'+code+'"]').length > 0) {
-                alert('<?php echo esc_js( __( 'Language already exists in the list.', 'icey-google-translate' ) ); ?>');
+                alert('<?php echo esc_js( __( 'Language already exists in the list.', 'icey-for-google-translate' ) ); ?>');
                 return;
             }
 
