@@ -12,13 +12,11 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-// --- 0. Ladda textdomän för översättningar ---
 add_action( 'plugins_loaded', 'icey_gt_load_textdomain' );
 function icey_gt_load_textdomain() {
     load_plugin_textdomain( 'icey-google-translate', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
-// --- 1. Definiera tillgängliga språk ---
 function icey_gt_get_available_languages() {
     return [
         'en' => 'English', 'da' => 'Dansk', 'de' => 'Deutsch', 
@@ -28,7 +26,6 @@ function icey_gt_get_available_languages() {
     ];
 }
 
-// --- 2. Registrera inställningar ---
 add_action( 'admin_init', 'icey_gt_register_settings' );
 function icey_gt_register_settings() {
     register_setting( 'icey_gt_settings_group', 'icey_gt_heading', [ 'default' => 'Choose language' ] );
@@ -40,7 +37,6 @@ function icey_gt_register_settings() {
     register_setting( 'icey_gt_settings_group', 'icey_gt_custom_css', [ 'default' => '' ] );
 }
 
-// --- 3. Skapa menysida ---
 add_action( 'admin_menu', 'icey_gt_add_admin_menu' );
 function icey_gt_add_admin_menu() {
     $page = add_options_page( 'Icey Google Translate', 'Google Translate', 'manage_options', 'icey-google-translate', 'icey_gt_settings_page' );
@@ -51,7 +47,6 @@ function icey_gt_admin_scripts() {
     wp_enqueue_script( 'jquery-ui-sortable' );
 }
 
-// --- 4. Bygg Inställningssidan (HTML/JS/CSS för Admin) ---
 function icey_gt_settings_page() {
     $all_langs = icey_gt_get_available_languages();
     $active_langs_str = get_option( 'icey_gt_active_langs', 'en,da,de,fi,fr,it,no,sv' );
@@ -142,12 +137,10 @@ function icey_gt_settings_page() {
             $('#icey_gt_active_langs').val(langs.join(','));
         }
 
-        // Initiera sortable
         $('#icey_gt_pills_container').sortable({
             update: function(event, ui) { updateHiddenInput(); }
         });
 
-        // Lägg till språk
         $('#icey_gt_add_lang_btn').on('click', function() {
             var selected = $('#icey_gt_add_lang_select').find(':selected');
             var code = selected.val();
@@ -164,7 +157,6 @@ function icey_gt_settings_page() {
             updateHiddenInput();
         });
 
-        // Ta bort språk
         $(document).on('click', '.remove-lang', function() {
             $(this).parent('li').remove();
             updateHiddenInput();
@@ -174,12 +166,10 @@ function icey_gt_settings_page() {
     <?php
 }
 
-// --- 5. Ladda CSS och JS på Frontenden ---
 add_action( 'wp_enqueue_scripts', 'icey_gt_enqueue_scripts' );
 function icey_gt_enqueue_scripts() {
     wp_enqueue_style( 'icey-gt-style', plugin_dir_url( __FILE__ ) . 'css/frontend.css', [], '1.0.0' );
     
-    // Lägg in Custom CSS inline
     $custom_css = get_option( 'icey_gt_custom_css', '' );
     if ( ! empty( $custom_css ) ) {
         wp_add_inline_style( 'icey-gt-style', $custom_css );
@@ -187,13 +177,11 @@ function icey_gt_enqueue_scripts() {
 
     wp_enqueue_script( 'icey-gt-script', plugin_dir_url( __FILE__ ) . 'js/frontend.js', [], '1.0.0', true );
     
-    // Skicka variabler till JS
     wp_localize_script( 'icey-gt-script', 'iceyGTVars', [
         'defaultLang' => get_option( 'icey_gt_default_lang', 'sv' )
     ]);
 }
 
-// --- 6. Rendera HTML Modalen ---
 add_action( 'wp_footer', 'icey_gt_render_modal_html' );
 function icey_gt_render_modal_html() {
     $heading = get_option( 'icey_gt_heading', 'Choose language' );

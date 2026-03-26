@@ -9,10 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const warning_accepted_key = 'icey_gt_warning_accepted';
 	const gt_cookie_name = 'googtrans';
     
-    // Använd inställt standardspråk från PHP (oftast 'sv')
     const default_lang = (typeof iceyGTVars !== 'undefined') ? iceyGTVars.defaultLang : 'sv';
 
-	// Hitta alla länkar som ska trigga modalen (klassen kan sättas på menyval etc)
 	const language_links = document.querySelectorAll('.icey_language_toggle a, a.icey_language_toggle');
 
 	if (!modal || !backdrop || !language_select) return;
@@ -114,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	window.googleTranslateElementInit = function () {
-        // Hämta aktiva språk från select-listans options
         const active_langs_array = Array.from(language_select.options).map(opt => opt.value);
         const active_langs_string = active_langs_array.join(',');
 
