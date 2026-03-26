@@ -1,13 +1,14 @@
 <?php
 /**
- * Plugin Name: Icey Google Translate
- * Plugin URI: https://github.com/Icedor/wp-plugin-icey-google-translate
- * Description: A clean, customizable Google Translate modal for WordPress.
+ * Plugin Name: Icey for Google Translate
+ * Plugin URI: https://icey.se
+ * Description: Simply the easiest and best Google Translate plugin for WordPress out there.
  * Version: 1.0.0
- * Author: Icey
+ * Author: Icedor Johansson
  * Author URI: https://icey.se
+ * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: icey-google-translate
- * Domain Path: /languages
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }

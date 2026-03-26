@@ -1,9 +1,9 @@
-=== Icey - Google Translate ===
+=== Icey for Google Translate ===
 
 Contributors: icedor
 Tags: google translate, translation, multilingual, language
 Requires at least: 5.5
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.0
 Stable tag: 1.0.0
 License: GPLv2 or later
