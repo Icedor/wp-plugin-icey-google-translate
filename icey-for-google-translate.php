@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Icey for Google Translate
 * Description: Integrates Google Translate into WordPress through a configurable modal dialog with a custom language selector.
- * Version: 1.0.03
- * Author: Icedor Johansson
+ * Version: 1.0.06
+ * Author: Icey
  * Author URI: https://icey.se
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,13 +11,31 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
+define( 'ICEY_GT_VERSION', '1.0.06' );
 
 function icey_gt_get_available_languages() {
     return [
-        'en' => 'English', 'da' => 'Dansk', 'de' => 'Deutsch', 
-        'fi' => 'Suomi', 'fr' => 'Français', 'it' => 'Italiano', 
-        'no' => 'Norsk', 'sv' => 'Svenska', 'es' => 'Español', 
-        'pt' => 'Português', 'nl' => 'Nederlands', 'pl' => 'Polski'
+        'af' => 'Afrikaans', 'sq' => 'Shqip', 'am' => 'አማርኛ', 'ar' => 'العربية', 'hy' => 'Հայերեն',
+        'az' => 'Azərbaycan dili', 'eu' => 'Euskara', 'be' => 'Беларуская', 'bn' => 'বাংলা', 'bs' => 'Bosanski',
+        'bg' => 'Български', 'ca' => 'Català', 'ceb' => 'Cebuano', 'ny' => 'Chichewa', 'zh-CN' => '中文 (Simplified)',
+        'zh-TW' => '中文 (Traditional)', 'co' => 'Corsu', 'hr' => 'Hrvatski', 'cs' => 'Čeština', 'da' => 'Dansk',
+        'nl' => 'Nederlands', 'en' => 'English', 'eo' => 'Esperanto', 'et' => 'Eesti', 'tl' => 'Filipino',
+        'fi' => 'Suomi', 'fr' => 'Français', 'fy' => 'Frysk', 'gl' => 'Galego', 'ka' => 'ქართული',
+        'de' => 'Deutsch', 'el' => 'Ελληνικά', 'gu' => 'ગુજરાતી', 'ht' => 'Kreyòl ayisyen', 'ha' => 'Hausa',
+        'haw' => 'Ōlelo Hawai\'i', 'iw' => 'עברית', 'hi' => 'हिन्दी', 'hmn' => 'Hmong', 'hu' => 'Magyar',
+        'is' => 'Íslenska', 'ig' => 'Igbo', 'id' => 'Bahasa Indonesia', 'ga' => 'Gaeilge', 'it' => 'Italiano',
+        'ja' => '日本語', 'jw' => 'Basa Jawa', 'kn' => 'ಕನ್ನಡ', 'kk' => 'Қазақ тілі', 'km' => 'ភាសាខ្មែរ',
+        'ko' => '한국어', 'ku' => 'Kurdî', 'ky' => 'Кыргызча', 'lo' => 'ລາວ', 'la' => 'Latina',
+        'lv' => 'Latviešu', 'lt' => 'Lietuvių', 'lb' => 'Lëtzebuergesch', 'mk' => 'Македонски', 'mg' => 'Malagasy',
+        'ms' => 'Bahasa Melayu', 'ml' => 'മലയാളം', 'mt' => 'Malti', 'mi' => 'Te Reo Māori', 'mr' => 'मराठी',
+        'mn' => 'Монгол', 'my' => 'ဗမာစာ', 'ne' => 'नेपाली', 'no' => 'Norsk', 'ps' => 'پښتو',
+        'fa' => 'فارسی', 'pl' => 'Polski', 'pt' => 'Português', 'pa' => 'ਪੰਜਾਬੀ', 'ro' => 'Română',
+        'ru' => 'Русский', 'sm' => 'Gagana fa\'a Sāmoa', 'gd' => 'Gàidhlig', 'sr' => 'Српски', 'st' => 'Sesotho',
+        'sn' => 'ChiShona', 'sd' => 'سنڌي', 'si' => 'සිංහල', 'sk' => 'Slovenčina', 'sl' => 'Slovenščina',
+        'so' => 'Soomaali', 'es' => 'Español', 'su' => 'Basa Sunda', 'sw' => 'Kiswahili', 'sv' => 'Svenska',
+        'tg' => 'Тоҷикӣ', 'ta' => 'தமிழ்', 'te' => 'తెలుగు', 'th' => 'ไทย', 'tr' => 'Türkçe',
+        'uk' => 'Українська', 'ur' => 'اردو', 'uz' => 'O\'zbekcha', 'vi' => 'Tiếng Việt', 'cy' => 'Cymraeg',
+        'xh' => 'isiXhosa', 'yi' => 'ייִדיש', 'yo' => 'Yorùbá', 'zu' => 'isiZulu'
     ];
 }
 
@@ -28,7 +46,7 @@ function icey_gt_register_settings() {
     register_setting( 'icey_gt_settings_group', 'icey_gt_btn_cancel', [ 'type' => 'string', 'default' => 'Cancel', 'sanitize_callback' => 'sanitize_text_field' ] );
     register_setting( 'icey_gt_settings_group', 'icey_gt_btn_translate', [ 'type' => 'string', 'default' => 'Translate', 'sanitize_callback' => 'sanitize_text_field' ] );
     register_setting( 'icey_gt_settings_group', 'icey_gt_default_lang', [ 'type' => 'string', 'default' => 'sv', 'sanitize_callback' => 'sanitize_text_field' ] );
-    register_setting( 'icey_gt_settings_group', 'icey_gt_active_langs', [ 'type' => 'string', 'default' => 'en,da,de,fi,fr,it,no,sv', 'sanitize_callback' => 'sanitize_text_field' ] );
+    register_setting( 'icey_gt_settings_group', 'icey_gt_active_langs', [ 'type' => 'string', 'default' => 'en,zh-CN,de,fr', 'sanitize_callback' => 'sanitize_text_field' ] );
     register_setting( 'icey_gt_settings_group', 'icey_gt_custom_css', [ 'type' => 'string', 'default' => '', 'sanitize_callback' => 'wp_strip_all_tags' ] );
 }
 
@@ -38,13 +56,20 @@ function icey_gt_add_admin_menu() {
     $icey_gt_page_hook = add_options_page( 'Icey Google Translate', 'Google Translate', 'manage_options', 'icey-for-google-translate', 'icey_gt_settings_page' );
 }
 
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'icey_gt_settings_link' );
+function icey_gt_settings_link( $links ) {
+    $settings_link = '<a href="options-general.php?page=icey-for-google-translate">' . esc_html__( 'Settings', 'icey-for-google-translate' ) . '</a>';
+    array_unshift( $links, $settings_link );
+    return $links;
+}
+
 add_action( 'admin_enqueue_scripts', 'icey_gt_admin_scripts' );
 function icey_gt_admin_scripts( $hook ) {
     global $icey_gt_page_hook;
     if ( $hook !== $icey_gt_page_hook ) { return; }
 
     wp_enqueue_script( 'jquery-ui-sortable' );
-    wp_enqueue_script( 'icey-gt-admin-script', plugin_dir_url( __FILE__ ) . 'js/admin.js', ['jquery', 'jquery-ui-sortable'], '1.0.02', true );
+    wp_enqueue_script( 'icey-gt-admin-script', plugin_dir_url( __FILE__ ) . 'js/admin.js', ['jquery', 'jquery-ui-sortable'], ICEY_GT_VERSION, true );
     wp_localize_script( 'icey-gt-admin-script', 'iceyGTAdminVars', [
         'langExistsMsg' => __( 'Language already exists in the list.', 'icey-for-google-translate' )
     ]);
@@ -52,7 +77,7 @@ function icey_gt_admin_scripts( $hook ) {
 
 function icey_gt_settings_page() {
     $all_langs = icey_gt_get_available_languages();
-    $active_langs_str = get_option( 'icey_gt_active_langs', 'en,da,de,fi,fr,it,no,sv' );
+    $active_langs_str = get_option( 'icey_gt_active_langs', 'en,zh-CN,de,fr' );
     $active_langs = array_filter( explode( ',', $active_langs_str ) );
     ?>
     <div class="wrap">
@@ -134,23 +159,23 @@ function icey_gt_settings_page() {
 
 add_action( 'wp_enqueue_scripts', 'icey_gt_enqueue_scripts' );
 function icey_gt_enqueue_scripts() {
-    wp_enqueue_style( 'icey-gt-style', plugin_dir_url( __FILE__ ) . 'css/frontend.css', [], '1.0.02' );
+    wp_enqueue_style( 'icey-gt-style', plugin_dir_url( __FILE__ ) . 'css/frontend.css', [], ICEY_GT_VERSION );
     
     $custom_css = get_option( 'icey_gt_custom_css', '' );
     if ( ! empty( $custom_css ) ) {
         wp_add_inline_style( 'icey-gt-style', $custom_css );
     }
 
-    wp_enqueue_script( 'icey-gt-script', plugin_dir_url( __FILE__ ) . 'js/frontend.js', [], '1.0.02', true );
+    wp_enqueue_script( 'icey-gt-script', plugin_dir_url( __FILE__ ) . 'js/frontend.js', [], ICEY_GT_VERSION, true );
 
     $default_lang = get_option( 'icey_gt_default_lang', 'sv' );
     $googtrans = isset( $_COOKIE['googtrans'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['googtrans'] ) ) : '';
 
     if ( ! empty( $googtrans ) && $googtrans !== '/' . $default_lang . '/' . $default_lang ) {
-        wp_enqueue_script( 'icey-gt-google-translate', 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', [ 'icey-gt-script' ], null, true );
+        wp_enqueue_script( 'icey-gt-google-translate', 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', [ 'icey-gt-script' ], ICEY_GT_VERSION, true );
     }
 
-    $active_langs_str = get_option( 'icey_gt_active_langs', 'en,da,de,fi,fr,it,no,sv' );
+    $active_langs_str = get_option( 'icey_gt_active_langs', 'en,zh-CN,de,fr' );
     wp_localize_script( 'icey-gt-script', 'iceyGTVars', [
         'defaultLang' => get_option( 'icey_gt_default_lang', 'sv' ),
         'activeLangs' => $active_langs_str
@@ -165,7 +190,7 @@ function icey_gt_render_modal_html() {
     $btn_translate = get_option( 'icey_gt_btn_translate', 'Translate' );
     
     $all_langs = icey_gt_get_available_languages();
-    $active_langs_str = get_option( 'icey_gt_active_langs', 'en,da,de,fi,fr,it,no,sv' );
+    $active_langs_str = get_option( 'icey_gt_active_langs', 'en,zh-CN,de,fr' );
     $active_langs = array_filter( explode( ',', $active_langs_str ) );
     ?>
     <div id="icey_language_modal_backdrop" class="icey_language_modal_backdrop" style="display: none;"></div>

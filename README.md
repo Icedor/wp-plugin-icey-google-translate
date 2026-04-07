@@ -1,11 +1,11 @@
 # Icey for Google Translate
 
-**Contributors:** icedor  
+**Contributors:** Icedor  
 **Tags:** google translate, translation, multilingual, language  
 **Requires at least:** 5.5  
-**Tested up to:** 6.9  
+**Tested up to:** 7.0  
 **Requires PHP:** 7.0  
-**Stable tag:** 1.0.03
+**Stable tag:** 1.0.06
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -47,5 +47,5 @@ None
 
 ## Changelog
 
-### 1.0.02 - 2026-04-07
+### 1.0.06 - 2026-04-07
 * Initial plugin release.
