@@ -5,7 +5,7 @@ Tags: google translate, translation, multilingual, language
 Requires at least: 5.5
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 1.0.09
+Stable tag: 1.0.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,5 +47,5 @@ None
 
 == Changelog ==
 
-= 1.0.09 - 2026-04-07 =
+= 1.0.1 - 2026-04-07 =
 * Initial plugin release.
