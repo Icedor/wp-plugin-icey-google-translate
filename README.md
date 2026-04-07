@@ -5,8 +5,8 @@
 **Requires at least:** 5.5  
 **Tested up to:** 7.0  
 **Requires PHP:** 7.0  
-**Stable tag:** 1.0.06
-**License:** GPLv2 or later  
+**Stable tag:** 1.0.08
+**License:** GPLv3 or later
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
 Integrates Google Translate into WordPress through a modal with a configurable language selector.
@@ -47,5 +47,5 @@ None
 
 ## Changelog
 
-### 1.0.06 - 2026-04-07
+### 1.0.08 - 2026-04-07
 * Initial plugin release.

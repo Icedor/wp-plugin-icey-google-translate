@@ -11,16 +11,16 @@
 	padding: 1rem 3rem 1rem 1.5rem;
 	font-size: 1rem;
 	font-family: inherit;
-	color: #182112;
-	background-color: #FAFAFA;
-	border: 2px solid #2D471C;
+	color: #333333;
+	background-color: #ffffff;
+	border: 2px solid #cccccc;
 	border-radius: 0.25rem;
 	cursor: pointer;
 	transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .icey_language_select:focus {
 	outline: none;
-	border-color: #8A1538;
+	border-color: #333333;
 }
 .icey_select_wrapper::after {
 	content: "";
@@ -32,7 +32,7 @@
 	height: 0;
 	border-left: 6px solid transparent;
 	border-right: 6px solid transparent;
-	border-top: 6px solid #2D471C;
+	border-top: 6px solid #333333;
 	pointer-events: none;
 }
 
@@ -80,13 +80,13 @@
 }
 .icey_modal_title {
 	font-size: 1.6rem;
-	color: #2D471C;
+	color: #111111;
 	margin: 0 0 0.5em 0;
 	font-weight: bold;
 }
 .icey_modal_content p {
 	font-size: 1rem;
-	color: #182112;
+	color: #333333;
 	line-height: 1.6;
 	margin: 0 0 1rem 0;
 }
@@ -114,20 +114,20 @@
 	transition: all 0.3s ease;
 }
 .icey_btn_primary {
-	background-color: #8A1538;
-	color: #FAFAFA;
+	background-color: #111111;
+	color: #ffffff;
 }
 .icey_btn_primary:hover {
-	background-color: #2D471C;
+	background-color: #333333;
 }
 .icey_btn_secondary {
 	background-color: transparent;
-	color: #2D471C;
-	border: 1.5px solid #2D471C;
+	color: #111111;
+	border: 1.5px solid #111111;
 }
 .icey_btn_secondary:hover {
-	background-color: #2D471C;
-	color: #FAFAFA;
+	background-color: #111111;
+	color: #ffffff;
 }
 
 /* --- Hide Google Translate Native UI --- */
