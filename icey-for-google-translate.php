@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Icey for Google Translate
 * Description: Integrates Google Translate into WordPress through a configurable modal dialog with a custom language selector.
- * Version: 1.0.02
+ * Version: 1.0.03
  * Author: Icedor Johansson
  * Author URI: https://icey.se
  * License: GPLv2 or later
