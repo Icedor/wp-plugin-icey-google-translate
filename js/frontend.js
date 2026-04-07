@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	const btn_cancel = document.getElementById('icey_stay_swedish');
 	const btn_proceed = document.getElementById('icey_proceed_translate');
 	const language_select = document.getElementById('icey_language_select');
-	
+
 	const session_key = 'icey_preferred_language';
 	const warning_accepted_key = 'icey_gt_warning_accepted';
 	const gt_cookie_name = 'googtrans';
-    
-    const default_lang = (typeof iceyGTVars !== 'undefined') ? iceyGTVars.defaultLang : 'sv';
+
+	const default_lang = (typeof iceyGTVars !== 'undefined') ? iceyGTVars.defaultLang : 'sv';
 
 	const language_links = document.querySelectorAll('.icey_language_toggle a, a.icey_language_toggle');
 
@@ -111,9 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-	window.googleTranslateElementInit = function () {
-        const active_langs_array = Array.from(language_select.options).map(opt => opt.value);
-        const active_langs_string = active_langs_array.join(',');
+	window['googleTranslateElementInit'] = function () {
+		if (current_lang === default_lang) {
+			return;
+		}
+
+		const active_langs_string = (typeof iceyGTVars !== 'undefined' && iceyGTVars.activeLangs) ? iceyGTVars.activeLangs : '';
 
 		new google.translate.TranslateElement({
 			pageLanguage: default_lang,
@@ -122,11 +125,4 @@ document.addEventListener('DOMContentLoaded', () => {
 			autoDisplay: false
 		}, 'google_translate_element');
 	};
-
-	if (current_lang !== default_lang) {
-		const gtScript = document.createElement('script');
-		gtScript.type = 'text/javascript';
-		gtScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-		document.body.appendChild(gtScript);
-	}
 });

@@ -1,17 +1,17 @@
-# Icey for Google Translate
+=== Icey for Google Translate ===
 
-**Contributors:** icedor  
-**Tags:** google translate, translation, multilingual, language  
-**Requires at least:** 5.5  
-**Tested up to:** 6.9  
-**Requires PHP:** 7.0  
-**Stable tag:** 1.0.02  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+Contributors: icedor
+Tags: google translate, translation, multilingual, language
+Requires at least: 5.5
+Tested up to: 6.9
+Requires PHP: 7.0
+Stable tag: 1.0.02
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Integrates Google Translate into WordPress through a modal with a configurable language selector.
 
-## Description
+== Description ==
 
 This plugin integrates Google Translate into a WordPress site through a modal in place of the default Google Translate widget.
 
@@ -19,33 +19,33 @@ The plugin provides a settings page where you can configure the modal heading, e
 
 Translation is performed by Google Translate. Visitors select a target language in the modal, and the page is reloaded with the selected translation applied.
 
-## Usage
+== Usage ==
 
 To open the modal from a menu item or link, add the CSS class `icey_language_toggle` to the link. Clicking the link will open the language selection modal.
 
-## Installation
+== Installation ==
 
 1. Find the plugin in the WordPress repository or upload the plugin folder to `/wp-content/plugins/`.
 2. Go to the **Plugins** page in your WordPress admin and activate the plugin.
 
-## Frequently Asked Questions
+== Frequently Asked Questions ==
 
-### How do I uninstall the plugin?
+= How do I uninstall the plugin? =
 Simply deactivate and delete it from the **Plugins** page.
 
-## Localization
+== Localization ==
 * English (default)
 * Swedish (`sv_SE`)
 
-## Screenshots
+== Screenshots ==
 
 None
 
-## Upgrade Notice
+== Upgrade Notice ==
 
 None
 
-## Changelog
+== Changelog ==
 
-### 1.0.02 - 2026-04-07
+= 1.0.02 - 2026-04-07 =
 * Initial plugin release.

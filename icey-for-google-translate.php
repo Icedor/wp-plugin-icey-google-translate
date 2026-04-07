@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Icey for Google Translate
- * Description: Simply the easiest and best Google Translate plugin for WordPress out there.
+* Description: Integrates Google Translate into WordPress through a configurable modal dialog with a custom language selector.
  * Version: 1.0.02
  * Author: Icedor Johansson
  * Author URI: https://icey.se
@@ -11,11 +11,6 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-
-add_action( 'plugins_loaded', 'icey_gt_load_textdomain' );
-function icey_gt_load_textdomain() {
-    load_plugin_textdomain( 'icey-for-google-translate', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-}
 
 function icey_gt_get_available_languages() {
     return [
@@ -28,23 +23,31 @@ function icey_gt_get_available_languages() {
 
 add_action( 'admin_init', 'icey_gt_register_settings' );
 function icey_gt_register_settings() {
-    register_setting( 'icey_gt_settings_group', 'icey_gt_heading', [ 'default' => 'Choose language' ] );
-    register_setting( 'icey_gt_settings_group', 'icey_gt_explanation', [ 'default' => 'Translations are handled automatically by Google Translate.' ] );
-    register_setting( 'icey_gt_settings_group', 'icey_gt_btn_cancel', [ 'default' => 'Cancel' ] );
-    register_setting( 'icey_gt_settings_group', 'icey_gt_btn_translate', [ 'default' => 'Translate' ] );
-    register_setting( 'icey_gt_settings_group', 'icey_gt_default_lang', [ 'default' => 'sv' ] );
-    register_setting( 'icey_gt_settings_group', 'icey_gt_active_langs', [ 'default' => 'en,da,de,fi,fr,it,no,sv' ] );
-    register_setting( 'icey_gt_settings_group', 'icey_gt_custom_css', [ 'default' => '' ] );
+    register_setting( 'icey_gt_settings_group', 'icey_gt_heading', [ 'type' => 'string', 'default' => 'Choose language', 'sanitize_callback' => 'sanitize_text_field' ] );
+    register_setting( 'icey_gt_settings_group', 'icey_gt_explanation', [ 'type' => 'string', 'default' => 'Translations are handled automatically by Google Translate.', 'sanitize_callback' => 'sanitize_textarea_field' ] );
+    register_setting( 'icey_gt_settings_group', 'icey_gt_btn_cancel', [ 'type' => 'string', 'default' => 'Cancel', 'sanitize_callback' => 'sanitize_text_field' ] );
+    register_setting( 'icey_gt_settings_group', 'icey_gt_btn_translate', [ 'type' => 'string', 'default' => 'Translate', 'sanitize_callback' => 'sanitize_text_field' ] );
+    register_setting( 'icey_gt_settings_group', 'icey_gt_default_lang', [ 'type' => 'string', 'default' => 'sv', 'sanitize_callback' => 'sanitize_text_field' ] );
+    register_setting( 'icey_gt_settings_group', 'icey_gt_active_langs', [ 'type' => 'string', 'default' => 'en,da,de,fi,fr,it,no,sv', 'sanitize_callback' => 'sanitize_text_field' ] );
+    register_setting( 'icey_gt_settings_group', 'icey_gt_custom_css', [ 'type' => 'string', 'default' => '', 'sanitize_callback' => 'wp_strip_all_tags' ] );
 }
 
 add_action( 'admin_menu', 'icey_gt_add_admin_menu' );
 function icey_gt_add_admin_menu() {
-    $page = add_options_page( 'Icey Google Translate', 'Google Translate', 'manage_options', 'icey-for-google-translate', 'icey_gt_settings_page' );
-    add_action( "admin_print_scripts-{$page}", 'icey_gt_admin_scripts' );
+    global $icey_gt_page_hook;
+    $icey_gt_page_hook = add_options_page( 'Icey Google Translate', 'Google Translate', 'manage_options', 'icey-for-google-translate', 'icey_gt_settings_page' );
 }
 
-function icey_gt_admin_scripts() {
+add_action( 'admin_enqueue_scripts', 'icey_gt_admin_scripts' );
+function icey_gt_admin_scripts( $hook ) {
+    global $icey_gt_page_hook;
+    if ( $hook !== $icey_gt_page_hook ) { return; }
+
     wp_enqueue_script( 'jquery-ui-sortable' );
+    wp_enqueue_script( 'icey-gt-admin-script', plugin_dir_url( __FILE__ ) . 'js/admin.js', ['jquery', 'jquery-ui-sortable'], '1.0.02', true );
+    wp_localize_script( 'icey-gt-admin-script', 'iceyGTAdminVars', [
+        'langExistsMsg' => __( 'Language already exists in the list.', 'icey-for-google-translate' )
+    ]);
 }
 
 function icey_gt_settings_page() {
@@ -126,59 +129,31 @@ function icey_gt_settings_page() {
             <?php submit_button(); ?>
         </form>
     </div>
-
-    <script>
-    jQuery(document).ready(function($) {
-        function updateHiddenInput() {
-            var langs = [];
-            $('#icey_gt_pills_container li').each(function() {
-                langs.push($(this).data('code'));
-            });
-            $('#icey_gt_active_langs').val(langs.join(','));
-        }
-
-        $('#icey_gt_pills_container').sortable({
-            update: function(event, ui) { updateHiddenInput(); }
-        });
-
-        $('#icey_gt_add_lang_btn').on('click', function() {
-            var selected = $('#icey_gt_add_lang_select').find(':selected');
-            var code = selected.val();
-            var name = selected.data('name');
-
-            if (!code) return;
-            if ($('#icey_gt_pills_container li[data-code="'+code+'"]').length > 0) {
-                alert('<?php echo esc_js( __( 'Language already exists in the list.', 'icey-for-google-translate' ) ); ?>');
-                return;
-            }
-
-            var pill = $('<li data-code="'+code+'" style="background: #fff; border: 1px solid #ccc; padding: 5px 10px; border-radius: 20px; cursor: move; display: flex; align-items: center; gap: 8px;">'+name+' <span class="remove-lang" style="color: red; cursor: pointer; font-weight: bold;">&times;</span></li>');
-            $('#icey_gt_pills_container').append(pill);
-            updateHiddenInput();
-        });
-
-        $(document).on('click', '.remove-lang', function() {
-            $(this).parent('li').remove();
-            updateHiddenInput();
-        });
-    });
-    </script>
     <?php
 }
 
 add_action( 'wp_enqueue_scripts', 'icey_gt_enqueue_scripts' );
 function icey_gt_enqueue_scripts() {
-    wp_enqueue_style( 'icey-gt-style', plugin_dir_url( __FILE__ ) . 'css/frontend.css', [], '1.0.0' );
+    wp_enqueue_style( 'icey-gt-style', plugin_dir_url( __FILE__ ) . 'css/frontend.css', [], '1.0.02' );
     
     $custom_css = get_option( 'icey_gt_custom_css', '' );
     if ( ! empty( $custom_css ) ) {
         wp_add_inline_style( 'icey-gt-style', $custom_css );
     }
 
-    wp_enqueue_script( 'icey-gt-script', plugin_dir_url( __FILE__ ) . 'js/frontend.js', [], '1.0.0', true );
-    
+    wp_enqueue_script( 'icey-gt-script', plugin_dir_url( __FILE__ ) . 'js/frontend.js', [], '1.0.02', true );
+
+    $default_lang = get_option( 'icey_gt_default_lang', 'sv' );
+    $googtrans = isset( $_COOKIE['googtrans'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['googtrans'] ) ) : '';
+
+    if ( ! empty( $googtrans ) && $googtrans !== '/' . $default_lang . '/' . $default_lang ) {
+        wp_enqueue_script( 'icey-gt-google-translate', 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', [ 'icey-gt-script' ], null, true );
+    }
+
+    $active_langs_str = get_option( 'icey_gt_active_langs', 'en,da,de,fi,fr,it,no,sv' );
     wp_localize_script( 'icey-gt-script', 'iceyGTVars', [
-        'defaultLang' => get_option( 'icey_gt_default_lang', 'sv' )
+        'defaultLang' => get_option( 'icey_gt_default_lang', 'sv' ),
+        'activeLangs' => $active_langs_str
     ]);
 }
 
