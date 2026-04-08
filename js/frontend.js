@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 	const modal = document.getElementById('icey_language_modal');
 	const backdrop = document.getElementById('icey_language_modal_backdrop');
-	const btn_cancel = document.getElementById('icey_stay_swedish');
+	const btn_cancel = document.getElementById('icey_cancel_translate');
 	const btn_proceed = document.getElementById('icey_proceed_translate');
 	const language_select = document.getElementById('icey_language_select');
 

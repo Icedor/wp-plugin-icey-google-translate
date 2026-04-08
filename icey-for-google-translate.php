@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Icey for Google Translate
 * Description: Integrates Google Translate into WordPress through a configurable modal dialog with a custom language selector.
- * Version: 1.0.1
+ * Version: 1.0.11
  * Author: Icey
  * Author URI: https://icey.se
  * License: GPLv3 or later
@@ -11,7 +11,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ICEY_GT_VERSION', '1.0.1' );
+define( 'ICEY_GT_VERSION', '1.0.11' );
 
 function icey_gt_get_available_languages() {
     return [
@@ -47,13 +47,12 @@ function icey_gt_register_settings() {
     register_setting( 'icey_gt_settings_group', 'icey_gt_btn_translate', [ 'type' => 'string', 'default' => 'Translate', 'sanitize_callback' => 'sanitize_text_field' ] );
     register_setting( 'icey_gt_settings_group', 'icey_gt_default_lang', [ 'type' => 'string', 'default' => 'sv', 'sanitize_callback' => 'sanitize_text_field' ] );
     register_setting( 'icey_gt_settings_group', 'icey_gt_active_langs', [ 'type' => 'string', 'default' => 'en,zh-CN,de,fr', 'sanitize_callback' => 'sanitize_text_field' ] );
-    register_setting( 'icey_gt_settings_group', 'icey_gt_custom_css', [ 'type' => 'string', 'default' => '', 'sanitize_callback' => 'wp_strip_all_tags' ] );
 }
 
 add_action( 'admin_menu', 'icey_gt_add_admin_menu' );
 function icey_gt_add_admin_menu() {
     global $icey_gt_page_hook;
-    $icey_gt_page_hook = add_options_page( 'Icey Google Translate', 'Google Translate', 'manage_options', 'icey-for-google-translate', 'icey_gt_settings_page' );
+    $icey_gt_page_hook = add_options_page( esc_html__( 'Icey Google Translate', 'icey-for-google-translate' ), esc_html__( 'Google Translate', 'icey-for-google-translate' ), 'manage_options', 'icey-for-google-translate', 'icey_gt_settings_page' );
 }
 
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'icey_gt_settings_link' );
@@ -85,7 +84,7 @@ function icey_gt_settings_page() {
         <p class="description" style="margin-bottom: 20px; font-size: 14px;">
             <?php esc_html_e( 'To open the translation modal from a link, button or menu item, add the CSS class', 'icey-for-google-translate' ); ?> <strong><code>icey_language_toggle</code></strong> <?php esc_html_e( 'to that item.', 'icey-for-google-translate' ); ?>
         </p>
-        <form method="post" action="options.php">
+        <form method="post" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
             <?php settings_fields( 'icey_gt_settings_group' ); ?>
             
             <table class="form-table">
@@ -145,13 +144,6 @@ function icey_gt_settings_page() {
                         <input type="hidden" name="icey_gt_active_langs" id="icey_gt_active_langs" value="<?php echo esc_attr($active_langs_str); ?>" />
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row"><?php esc_html_e( 'Custom CSS', 'icey-for-google-translate' ); ?></th>
-                    <td>
-                        <textarea name="icey_gt_custom_css" rows="6" class="large-text" style="font-family: monospace;"><?php echo esc_textarea( get_option('icey_gt_custom_css') ); ?></textarea>
-                        <p class="description"><?php esc_html_e( 'Add custom CSS to override default styling.', 'icey-for-google-translate' ); ?></p>
-                    </td>
-                </tr>
             </table>
             
             <?php submit_button(); ?>
@@ -164,18 +156,13 @@ add_action( 'wp_enqueue_scripts', 'icey_gt_enqueue_scripts' );
 function icey_gt_enqueue_scripts() {
     wp_enqueue_style( 'icey-gt-style', plugin_dir_url( __FILE__ ) . 'css/frontend.css', [], ICEY_GT_VERSION );
     
-    $custom_css = get_option( 'icey_gt_custom_css', '' );
-    if ( ! empty( $custom_css ) ) {
-        wp_add_inline_style( 'icey-gt-style', $custom_css );
-    }
-
     wp_enqueue_script( 'icey-gt-script', plugin_dir_url( __FILE__ ) . 'js/frontend.js', [], ICEY_GT_VERSION, true );
 
     $default_lang = get_option( 'icey_gt_default_lang', 'sv' );
     $googtrans = isset( $_COOKIE['googtrans'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['googtrans'] ) ) : '';
 
     if ( ! empty( $googtrans ) && $googtrans !== '/' . $default_lang . '/' . $default_lang ) {
-        wp_enqueue_script( 'icey-gt-google-translate', 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', [ 'icey-gt-script' ], ICEY_GT_VERSION, true );
+        wp_enqueue_script( 'icey-gt-google-translate', 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', [ 'icey-gt-script' ], null, true );
     }
 
     $active_langs_str = get_option( 'icey_gt_active_langs', 'en,zh-CN,de,fr' );
@@ -212,8 +199,8 @@ function icey_gt_render_modal_html() {
                     </select>
                 </div>
             </div>
-            <div class="icey_modal_buttons">
-                <button id="icey_stay_swedish" class="icey_btn icey_btn_secondary"><?php echo esc_html( $btn_cancel ); ?></button>
+            <div class="icey_modal_buttons"><button id="icey_cancel_translate" class="icey_btn icey_btn_secondary"><?php echo esc_html( $btn_cancel ); ?></button>
+            <button id="icey_stay_swedish" class="icey_btn icey_btn_secondary"><?php echo esc_html( $btn_cancel ); ?></button>
                 <button id="icey_proceed_translate" class="icey_btn icey_btn_primary"><?php echo esc_html( $btn_translate ); ?></button>
             </div>
         </div>

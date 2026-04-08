@@ -3,9 +3,9 @@
 Contributors: Icedor
 Tags: google translate, translation, multilingual, language
 Requires at least: 5.5
-Tested up to: 7.0
+Tested up to: 6.9.4  
 Requires PHP: 7.0
-Stable tag: 1.0.1
+Stable tag: 1.0.11
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,9 +15,18 @@ Integrates Google Translate into WordPress through a modal with a configurable l
 
 This plugin integrates Google Translate into a WordPress site through a modal in place of the default Google Translate widget.
 
-The plugin provides a settings page where you can configure the modal heading, explanation text, and button labels, set the site's default language, and choose which languages appear in the dropdown. Languages in the dropdown can be reordered using drag and drop. A field for custom CSS is included for adjusting the appearance of the modal.
+The plugin provides a settings page where you can configure the modal heading, explanation text, and button labels, set the site's default language, and choose which languages appear in the dropdown. Languages in the dropdown can be reordered using drag and drop.
+Visitors select a target language in the modal, and the page is reloaded with the selected translation applied.
 
-Translation is performed by Google Translate. Visitors select a target language in the modal, and the page is reloaded with the selected translation applied.
+== External Services ==
+
+This plugin relies on the Google Translate service to provide automated translations. 
+
+* Service: Google Translate (https://translate.google.com)
+* Purpose: To provide on-the-fly translation of website content.
+* Data Sent: When a translation is requested, the service may collect the user's IP address, browser information, and the URL of the page being translated. It also sets a 'googtrans' cookie to remember the user's language preference.
+* Google Terms of Service: https://policies.google.com/terms
+* Google Privacy Policy: https://policies.google.com/privacy
 
 == Usage ==
 
@@ -46,6 +55,10 @@ None
 None
 
 == Changelog ==
+
+= 1.0.11 - 2026-04-08 =
+* Added explicit documentation for external services (Google Translate).
+* Removed custom CSS functionality to comply with WordPress guidelines.
 
 = 1.0.1 - 2026-04-07 =
 * Initial plugin release.
