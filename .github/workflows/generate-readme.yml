@@ -1,0 +1,24 @@
+name: Generate README.md from readme.txt
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'readme.txt'
+
+jobs:
+  convert-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout kod
+        uses: actions/checkout@v4
+
+      - name: Konvertera till README.md
+        uses: varunsridharan/wp2github-md@v1
+
+      - name: Commit och Pusha README.md
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: Auto-generera README.md från readme.txt"
+          file_pattern: 'README.md'
