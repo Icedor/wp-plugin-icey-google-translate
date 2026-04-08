@@ -162,7 +162,7 @@ function icey_gt_enqueue_scripts() {
     $googtrans = isset( $_COOKIE['googtrans'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['googtrans'] ) ) : '';
 
     if ( ! empty( $googtrans ) && $googtrans !== '/' . $default_lang . '/' . $default_lang ) {
-        wp_enqueue_script( 'icey-gt-google-translate', 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', [ 'icey-gt-script' ], null, true );
+        wp_enqueue_script( 'icey-gt-google-translate', 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', [ 'icey-gt-script' ], ICEY_GT_VERSION, true );
     }
 
     $active_langs_str = get_option( 'icey_gt_active_langs', 'en,zh-CN,de,fr' );
