@@ -3,7 +3,7 @@
 **Contributors:** Icedor  
 **Tags:** google translate, translation, multilingual, language  
 **Requires at least:** 5.5  
-**Tested up to:** 6.9.4  
+**Tested up to:** 6.9  
 **Requires PHP:** 7.0  
 **Stable tag:** 1.0.11  
 **License:** GPLv3 or later  
