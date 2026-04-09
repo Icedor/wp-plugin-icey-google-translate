@@ -28,11 +28,10 @@ jobs:
           node -e "
             const fs = require('fs');
             const mod = require('wp-readme-to-markdown');
-            const fn = mod.wp_readme_to_markdown || mod.convert || mod.default || (typeof mod === 'function' ? mod : null);
-            if (!fn) { console.error('Exports:', Object.keys(mod)); throw new Error('No convert function found'); }
-            const input = fs.readFileSync('readme.txt', 'utf8');
-            fs.writeFileSync('README.md', fn(input));
-            console.log('README.md created successfully');
+            console.log('typeof mod:', typeof mod);
+            console.log('mod:', mod);
+            console.log('keys:', Object.keys(mod));
+            console.log('proto keys:', Object.getOwnPropertyNames(mod));
           "
 
       - name: Commit and push README.md
