@@ -11,6 +11,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Integrates Google Translate into WordPress through a modal with a configurable language selector.
 
+== Usage ==
+
+To open the modal from a menu item or link, add the CSS class `icey_language_toggle` to the link. Clicking the link will open the language selection modal.
+
 == Description ==
 
 This plugin integrates Google Translate into a WordPress site through a modal in place of the default Google Translate widget.
@@ -27,10 +31,6 @@ This plugin relies on the Google Translate service to provide automated translat
 * Data Sent: When a translation is requested, the service may collect the user's IP address, browser information, and the URL of the page being translated. It also sets a 'googtrans' cookie to remember the user's language preference.
 * Google Terms of Service: https://policies.google.com/terms
 * Google Privacy Policy: https://policies.google.com/privacy
-
-== Usage ==
-
-To open the modal from a menu item or link, add the CSS class `icey_language_toggle` to the link. Clicking the link will open the language selection modal.
 
 == Installation ==
 
