@@ -40,7 +40,7 @@ This plugin relies on the Google Translate service to provide automated translat
 == Frequently Asked Questions ==
 
 = How do I uninstall the plugin? =
-Simply deactivate and delete it from the **Plugins** page.
+Simply deactivate and delete it from the **Plugins** page. Leaves nothing behind.
 
 == Localization ==
 * English (default)
