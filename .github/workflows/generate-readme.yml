@@ -26,10 +26,13 @@ jobs:
         run: |
           npm install wp-readme-to-markdown
           node -e "
+            const fs = require('fs');
             const mod = require('wp-readme-to-markdown');
-            console.log('typeof:', typeof mod);
-            console.log('keys:', Object.keys(mod));
-            console.log('mod:', mod);
+            const fn = mod.wp_readme_to_markdown || mod.convert || mod.default || (typeof mod === 'function' ? mod : null);
+            if (!fn) { console.error('Exports:', Object.keys(mod)); throw new Error('No convert function found'); }
+            const input = fs.readFileSync('readme.txt', 'utf8');
+            fs.writeFileSync('README.md', fn(input));
+            console.log('README.md created successfully');
           "
 
       - name: Commit and push README.md
