@@ -25,14 +25,7 @@ jobs:
       - name: Convert readme.txt to README.md
         run: |
           npm install wp-readme-to-markdown
-          node -e "
-            const fs = require('fs');
-            const mod = require('wp-readme-to-markdown');
-            console.log('typeof mod:', typeof mod);
-            console.log('mod:', mod);
-            console.log('keys:', Object.keys(mod));
-            console.log('proto keys:', Object.getOwnPropertyNames(mod));
-          "
+          node -e "require('wp-readme-to-markdown');"
 
       - name: Commit and push README.md
         uses: stefanzweifel/git-auto-commit-action@v5
