@@ -14,8 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Convert to README.md
-        uses: varunsridharan/wp2github-md@master
+      - name: Convert readme.txt to README.md
+        run: |
+          curl -sL https://github.com/wpreadme2markdown/wp2md/releases/latest/download/wp2md.phar -o wp2md.phar
+          php wp2md.phar -i readme.txt -o README.md
+          rm wp2md.phar
 
       - name: Commit and push README.md
         uses: stefanzweifel/git-auto-commit-action@v5
