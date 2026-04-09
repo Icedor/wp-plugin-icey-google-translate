@@ -11,14 +11,14 @@ jobs:
   convert-and-commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout kod
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Generate README.md
-        uses: 10up/action-wordpress-plugin-readme-to-markdown@stable
+      - name: Convert to README.md
+        uses: varunsridharan/wp2github-md@master
 
-      - name: Commit och Pusha README.md
+      - name: Commit and push README.md
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs: Auto-generera README.md från readme.txt"
+          commit_message: "docs: Auto-generate README.md from readme.txt"
           file_pattern: 'README.md'

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Icey for Google Translate
 * Description: Integrates Google Translate into WordPress through a configurable modal dialog with a custom language selector.
- * Version: 1.0.14
+ * Version: 1.0.15
  * Author: Icey
  * Author URI: https://icey.se
  * License: GPLv3 or later
@@ -11,7 +11,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ICEY_GT_VERSION', '1.0.14' );
+define( 'ICEY_GT_VERSION', '1.0.15' );
 
 function icey_gt_get_available_languages() {
     return [
@@ -52,7 +52,7 @@ function icey_gt_register_settings() {
 add_action( 'admin_menu', 'icey_gt_add_admin_menu' );
 function icey_gt_add_admin_menu() {
     global $icey_gt_page_hook;
-    $icey_gt_page_hook = add_options_page( esc_html__( 'Icey Google Translate', 'icey-for-google-translate' ), esc_html__( 'Google Translate', 'icey-for-google-translate' ), 'manage_options', 'icey-for-google-translate', 'icey_gt_settings_page' );
+    $icey_gt_page_hook = add_options_page( esc_html__( 'Icey Google Translate', 'icey-for-google-translate' ), esc_html__( 'Icey Google Translate', 'icey-for-google-translate' ), 'manage_options', 'icey-for-google-translate', 'icey_gt_settings_page' );
 }
 
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'icey_gt_settings_link' );
@@ -157,13 +157,6 @@ function icey_gt_enqueue_scripts() {
     wp_enqueue_style( 'icey-gt-style', plugin_dir_url( __FILE__ ) . 'css/frontend.css', [], ICEY_GT_VERSION );
     
     wp_enqueue_script( 'icey-gt-script', plugin_dir_url( __FILE__ ) . 'js/frontend.js', [], ICEY_GT_VERSION, true );
-
-    $default_lang = get_option( 'icey_gt_default_lang', 'sv' );
-    $googtrans = isset( $_COOKIE['googtrans'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['googtrans'] ) ) : '';
-
-    if ( ! empty( $googtrans ) && $googtrans !== '/' . $default_lang . '/' . $default_lang ) {
-        wp_enqueue_script( 'icey-gt-google-translate', 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', [ 'icey-gt-script' ], ICEY_GT_VERSION, true );
-    }
 
     $active_langs_str = get_option( 'icey_gt_active_langs', 'en,zh-CN,de,fr' );
     wp_localize_script( 'icey-gt-script', 'iceyGTVars', [

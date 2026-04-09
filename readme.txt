@@ -5,7 +5,7 @@ Tags: google translate, translation, multilingual, language
 Requires at least: 5.5
 Tested up to: 6.9  
 Requires PHP: 7.0
-Stable tag: 1.0.14
+Stable tag: 1.0.15
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,9 @@ Simply deactivate and delete it from the **Plugins** page.
 None
 
 == Changelog ==
+
+= 1.0.15 - 2026-04-09 =
+* Fix typos *
 
 = 1.0.14 - 2026-04-09 =
 * Minor bugfixes *

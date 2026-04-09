@@ -105,17 +105,24 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	window['googleTranslateElementInit'] = function () {
-		if (current_lang === default_lang) {
-			return;
+        if (current_lang === default_lang) {
+            return;
+        }
+
+        const active_langs_string = (typeof iceyGTVars !== 'undefined' && iceyGTVars.activeLangs) ? iceyGTVars.activeLangs : '';
+
+        new google.translate.TranslateElement({
+            pageLanguage: default_lang,
+            includedLanguages: active_langs_string,
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+    };
+
+		if (current_lang !== default_lang || document.cookie.indexOf(gt_cookie_name + '=') !== -1) {
+			const gtScript = document.createElement('script');
+			gtScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+			document.body.appendChild(gtScript);
 		}
-
-		const active_langs_string = (typeof iceyGTVars !== 'undefined' && iceyGTVars.activeLangs) ? iceyGTVars.activeLangs : '';
-
-		new google.translate.TranslateElement({
-			pageLanguage: default_lang,
-			includedLanguages: active_langs_string,
-			layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-			autoDisplay: false
-		}, 'google_translate_element');
-	};
+	});
 });
