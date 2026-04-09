@@ -1,9 +1,9 @@
 name: Generate README.md from readme.txt
-
 on:
   push:
     branches:
       - main
+      - master
     paths:
       - 'readme.txt'
 
@@ -16,11 +16,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Convert readme.txt to README.md
         run: |
-          curl -sL https://github.com/wpreadme2markdown/wp2md/releases/latest/download/wp2md.phar -o wp2md.phar
-          php wp2md.phar -i readme.txt -o README.md
-          rm wp2md.phar
+          npm install wp-readme-to-markdown
+          node -e "
+            const fs = require('fs');
+            const { convert } = require('wp-readme-to-markdown');
+            const input = fs.readFileSync('readme.txt', 'utf8');
+            fs.writeFileSync('README.md', convert(input));
+          "
 
       - name: Commit and push README.md
         uses: stefanzweifel/git-auto-commit-action@v5
