@@ -119,10 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 'google_translate_element');
     };
 
-		if (current_lang !== default_lang || document.cookie.indexOf(gt_cookie_name + '=') !== -1) {
-			const gtScript = document.createElement('script');
-			gtScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-			document.body.appendChild(gtScript);
-		}
-	});
+	if (current_lang !== default_lang || document.cookie.indexOf(gt_cookie_name + '=') !== -1) {
+        const gtScript = document.createElement('script');
+        gtScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        document.body.appendChild(gtScript);
+    }
 });
