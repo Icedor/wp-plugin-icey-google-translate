@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Icey for Google Translate
 * Description: Integrates Google Translate into WordPress through a configurable modal dialog with a custom language selector.
- * Version: 1.0.13
+ * Version: 1.0.14
  * Author: Icey
  * Author URI: https://icey.se
  * License: GPLv3 or later
@@ -11,7 +11,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ICEY_GT_VERSION', '1.0.13' );
+define( 'ICEY_GT_VERSION', '1.0.14' );
 
 function icey_gt_get_available_languages() {
     return [
@@ -191,7 +191,14 @@ function icey_gt_render_modal_html() {
                 <p><?php echo nl2br( esc_html( $explanation ) ); ?></p>
                 <div class="icey_select_wrapper">
                     <select id="icey_language_select" class="icey_language_select">
+                        <?php 
+                        $default_lang = get_option( 'icey_gt_default_lang', 'sv' );
+                        if ( isset( $all_langs[$default_lang] ) ) : ?>
+                            <option value="<?php echo esc_attr( $default_lang ); ?>"><?php echo esc_html( $all_langs[$default_lang] ); ?></option>
+                        <?php endif; ?>
+
                         <?php foreach ( $active_langs as $code ) : 
+                            if ( $code === $default_lang ) continue;
                             if ( isset( $all_langs[$code] ) ) : ?>
                                 <option value="<?php echo esc_attr( $code ); ?>"><?php echo esc_html( $all_langs[$code] ); ?></option>
                             <?php endif; 
@@ -199,8 +206,8 @@ function icey_gt_render_modal_html() {
                     </select>
                 </div>
             </div>
-            <div class="icey_modal_buttons"><button id="icey_cancel_translate" class="icey_btn icey_btn_secondary"><?php echo esc_html( $btn_cancel ); ?></button>
-            <button id="icey_stay_swedish" class="icey_btn icey_btn_secondary"><?php echo esc_html( $btn_cancel ); ?></button>
+            <div class="icey_modal_buttons">
+                <button id="icey_cancel_translate" class="icey_btn icey_btn_secondary"><?php echo esc_html( $btn_cancel ); ?></button>
                 <button id="icey_proceed_translate" class="icey_btn icey_btn_primary"><?php echo esc_html( $btn_translate ); ?></button>
             </div>
         </div>

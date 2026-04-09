@@ -16,32 +16,26 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!modal || !backdrop || !language_select) return;
 
 	function deleteGTCookieAggressive() {
-		const host = window.location.hostname;
-		const domainParts = host.split('.');
-		const domainsToClean = [host, `.${host}`];
+        const host = window.location.hostname;
+        const parts = host.split('.');
+        
+        document.cookie = `${gt_cookie_name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        document.cookie = `${gt_cookie_name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${host};`;
+        document.cookie = `${gt_cookie_name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${host};`;
 
-		if (domainParts.length > 2) {
-			const parentDomain = domainParts.slice(-2).join('.');
-			domainsToClean.push(parentDomain, `.${parentDomain}`);
-		}
+        if (parts.length > 1) {
+            const rootDomain = parts.slice(-2).join('.');
+            document.cookie = `${gt_cookie_name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${rootDomain};`;
+            document.cookie = `${gt_cookie_name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${rootDomain};`;
+        }
+    }
 
-		domainsToClean.forEach(d => {
-			document.cookie = `${gt_cookie_name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${d};SameSite=Lax`;
-		});
-
-		document.cookie = `${gt_cookie_name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;SameSite=Lax`;
-	}
-
-	function setGTCookie(value) {
-		deleteGTCookieAggressive();
-		const host = window.location.hostname;
-		const domainParts = host.split('.');
-		const targetDomain = (domainParts.length > 2) ? `.${domainParts.slice(-2).join('.')}` : `.${host}`;
-
-		const expires = new Date();
-		expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
-		document.cookie = `${gt_cookie_name}=${value};expires=${expires.toUTCString()};path=/;domain=${targetDomain};SameSite=Lax`;
-	}
+    function setGTCookie(value) {
+        deleteGTCookieAggressive();
+        const expires = new Date();
+        expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
+        document.cookie = `${gt_cookie_name}=${value}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
+    }
 
 	function openModal() {
 		modal.style.display = 'block';
@@ -62,14 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	function executeTranslation(targetLang) {
-		if (targetLang === default_lang) {
-			deleteGTCookieAggressive();
-			setGTCookie(`/${default_lang}/${default_lang}`);
-		} else {
-			setGTCookie(`/${default_lang}/${targetLang}`);
-		}
-		window.location.reload();
-	}
+        if (targetLang === default_lang) {
+            deleteGTCookieAggressive();
+        } else {
+            setGTCookie(`/${default_lang}/${targetLang}`);
+        }
+        window.location.reload();
+    }
 
 	const current_lang = sessionStorage.getItem(session_key) || default_lang;
 	language_select.value = current_lang;
