@@ -14,8 +14,8 @@ jobs:
       - name: Checkout kod
         uses: actions/checkout@v4
 
-      - name: Konvertera till README.md
-        uses: varunsridharan/wp2github-md@v1
+      - name: Generate README.md
+        uses: 10up/action-wordpress-plugin-readme-to-markdown@stable
 
       - name: Commit och Pusha README.md
         uses: stefanzweifel/git-auto-commit-action@v5
