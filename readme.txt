@@ -20,7 +20,7 @@ To open the modal from a menu item or link, add the CSS class `icey_language_tog
 This plugin integrates Google Translate into a WordPress site through a modal in place of the default Google Translate widget.
 
 The plugin provides a settings page where you can configure the modal heading, explanation text, and button labels, set the site's default language, and choose which languages appear in the dropdown. Languages in the dropdown can be reordered using drag and drop.
-Visitors select a target language in the modal, and the page is reloaded with the selected translation applied. 
+Visitors select a target language in the modal, and the page is reloaded with the selected translation applied.
 
 == External Services ==
 

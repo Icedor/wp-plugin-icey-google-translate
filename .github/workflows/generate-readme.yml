@@ -1,5 +1,6 @@
 name: Generate README.md from readme.txt
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -25,10 +26,10 @@ jobs:
         run: |
           npm install wp-readme-to-markdown
           node -e "
-            const fs = require('fs');
-            const { wp_readme_to_markdown } = require('wp-readme-to-markdown');
-            const input = fs.readFileSync('readme.txt', 'utf8');
-            fs.writeFileSync('README.md', wp_readme_to_markdown(input));
+            const mod = require('wp-readme-to-markdown');
+            console.log('typeof:', typeof mod);
+            console.log('keys:', Object.keys(mod));
+            console.log('mod:', mod);
           "
 
       - name: Commit and push README.md
