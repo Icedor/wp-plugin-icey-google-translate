@@ -26,9 +26,9 @@ jobs:
           npm install wp-readme-to-markdown
           node -e "
             const fs = require('fs');
-            const { convert } = require('wp-readme-to-markdown');
+            const { wp_readme_to_markdown } = require('wp-readme-to-markdown');
             const input = fs.readFileSync('readme.txt', 'utf8');
-            fs.writeFileSync('README.md', convert(input));
+            fs.writeFileSync('README.md', wp_readme_to_markdown(input));
           "
 
       - name: Commit and push README.md
