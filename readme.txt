@@ -56,6 +56,9 @@ None
 
 == Changelog ==
 
+= 1.0.14 - 2026-04-09 =
+* Minor bugfixes *
+
 = 1.0.13 - 2026-04-08 =
 * Final first version :) *
 
