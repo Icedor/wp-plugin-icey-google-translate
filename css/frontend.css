@@ -101,6 +101,7 @@
 	margin-top: 1rem;
 }
 .icey_btn {
+	display: flex;
 	flex: 1;
 	justify-content: center;
 	text-align: center;
@@ -119,6 +120,7 @@
 }
 .icey_btn_primary:hover {
 	background-color: #333333;
+	color: #ffffff;
 }
 .icey_btn_secondary {
 	background-color: transparent;

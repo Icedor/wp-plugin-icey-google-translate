@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Icey for Google Translate
 * Description: Integrates Google Translate into WordPress through a configurable modal dialog with a custom language selector.
- * Version: 1.0.18
+ * Version: 1.0.19
  * Author: Icey
  * Author URI: https://icey.se
  * License: GPLv3 or later
@@ -11,13 +11,20 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ICEY_GT_VERSION', '1.0.18' );
+define( 'ICEY_GT_VERSION', '1.0.19' );
+
+add_filter( 'plugin_locale', 'icey_gt_force_locale', 10, 2 );
+function icey_gt_force_locale( $locale, $domain ) {
+    if ( 'icey-for-google-translate' === $domain ) {
+        return 'sv_SE';
+    }
+    return $locale;
+}
 
 add_action( 'plugins_loaded', 'icey_gt_load_textdomain' );
 function icey_gt_load_textdomain() {
     load_plugin_textdomain( 'icey-for-google-translate', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
-
 function icey_gt_get_available_languages() {
     return [
         'af' => 'Afrikaans', 'sq' => 'Shqip', 'am' => 'አማርኛ', 'ar' => 'العربية', 'hy' => 'Հայերեն',
