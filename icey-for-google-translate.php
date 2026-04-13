@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Icey for Google Translate
 * Description: Integrates Google Translate into WordPress through a configurable modal dialog with a custom language selector.
- * Version: 1.0.17
+ * Version: 1.0.18
  * Author: Icey
  * Author URI: https://icey.se
  * License: GPLv3 or later
@@ -11,7 +11,12 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'ICEY_GT_VERSION', '1.0.17' );
+define( 'ICEY_GT_VERSION', '1.0.18' );
+
+add_action( 'plugins_loaded', 'icey_gt_load_textdomain' );
+function icey_gt_load_textdomain() {
+    load_plugin_textdomain( 'icey-for-google-translate', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
 
 function icey_gt_get_available_languages() {
     return [
@@ -82,7 +87,19 @@ function icey_gt_settings_page() {
     <div class="wrap">
         <h1><?php esc_html_e( 'Icey Google Translate Settings', 'icey-for-google-translate' ); ?></h1>
         <p class="description" style="margin-bottom: 20px; font-size: 14px;">
-            <?php esc_html_e( 'To open the translation modal from a link, button or menu item, add the CSS class', 'icey-for-google-translate' ); ?> <strong><code>icey_language_toggle</code></strong> <?php esc_html_e( 'to that item.', 'icey-for-google-translate' ); ?>
+            <?php
+            printf(
+                esc_html__( 'To open the translation modal from a link, button or menu item, add the CSS class %s to that item.', 'icey-for-google-translate' ),
+                '<strong><code>icey_language_toggle</code></strong>'
+            );
+            ?>
+            <br>
+            <?php
+            printf(
+                esc_html__( 'Alternatively, use the shortcode %s to insert a ready-made button anywhere.', 'icey-for-google-translate' ),
+                '<strong><code>[icey_google_translate]</code></strong>'
+            );
+            ?>
         </p>
         <form method="post" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
             <?php settings_fields( 'icey_gt_settings_group' ); ?>
@@ -163,6 +180,14 @@ function icey_gt_enqueue_scripts() {
         'defaultLang' => get_option( 'icey_gt_default_lang', 'sv' ),
         'activeLangs' => $active_langs_str
     ]);
+}
+
+add_shortcode( 'icey_google_translate', 'icey_gt_shortcode' );
+function icey_gt_shortcode( $atts ) {
+    $atts = shortcode_atts( [
+        'label' => get_option( 'icey_gt_heading', __( 'Choose language', 'icey-for-google-translate' ) ),
+    ], $atts, 'icey_google_translate' );
+    return '<a href="#" role="button" class="icey_btn icey_btn_primary icey_language_toggle">' . esc_html( $atts['label'] ) . '</a>';
 }
 
 add_action( 'wp_footer', 'icey_gt_render_modal_html' );

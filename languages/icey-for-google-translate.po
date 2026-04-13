@@ -11,9 +11,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
 
-msgid "Icey Google Translate Settings"
-msgstr "Icey Google Translate Inställningar"
-
 msgid "Modal Heading"
 msgstr "Rubrik i modal"
 
@@ -44,11 +41,17 @@ msgstr "Lägg till"
 msgid "Language already exists in the list."
 msgstr "Språket finns redan i listan."
 
-msgid "Custom CSS"
-msgstr "Custom CSS"
+msgid "Icey Google Translate"
+msgstr "Icey Google Translate"
 
-msgid "Add custom CSS to override default styling."
-msgstr "Lägg till egen CSS för att skriva över standardutseendet."
+msgid "Icey Google Translate Settings"
+msgstr "Icey Google Translate Inställningar"
+
+msgid "To open the translation modal from a link, button or menu item, add the CSS class %s to that item."
+msgstr "Lägg till CSS-klassen %s på en länk, knapp eller menypost för att öppna översättningsmodalen."
+
+msgid "Alternatively, use the shortcode %s to insert a ready-made button anywhere."
+msgstr "Alternativt, använd kortkoden %s för att infoga en färdig knapp var som helst."
 
 msgid "Settings"
 msgstr "Inställningar"
