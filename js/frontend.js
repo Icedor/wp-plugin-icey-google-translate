@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const default_lang = (typeof iceyGTVars !== 'undefined') ? iceyGTVars.defaultLang : 'sv';
 
-	const language_links = document.querySelectorAll('.icey_language_toggle a, a.icey_language_toggle');
+	const language_links = document.querySelectorAll('.icey_language_toggle');
 
 	if (!modal || !backdrop || !language_select) return;
 
