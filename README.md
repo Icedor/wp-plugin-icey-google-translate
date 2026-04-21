@@ -5,7 +5,7 @@
 **Requires at least:** 5.5  
 **Tested up to:** 6.9    
 **Requires PHP:** 7.0  
-**Stable tag:** 1.0.19  
+**Stable tag:** 1.0.20  
 **License:** GPLv3 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -55,6 +55,9 @@ Simply deactivate and delete it from the **Plugins** page. Leaves nothing behind
 None
 
 ## Changelog ##
+
+### 1.0.20 - 2026-04-21 ###
+* All elements can now initiate translate modal *
 
 ### 1.0.19 - 2026-04-13 ###
 * Fixed SE translation *
